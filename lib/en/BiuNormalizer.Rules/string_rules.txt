@@ -1,0 +1,33 @@
+# String rules. Will be replaced through a simple string replacement, as the first step of the normalizer. 
+# Format: <string to replace>\t<replacement string>
+# Lines starting with "#" are regarded as comments.
+# Apart from the currency rules, the entire token is expected to be matched  
+# (e.g. "mit's" will not be affected by the "it's" rule)
+# You can add/remove rules to the list.  
+# This file is URF-8 encoded. If you need to work with ascii only, remove non-ascii rules (e.g. currency rules)
+
+won't	will not
+don't	do not
+doesn't	does not
+didn't	did not
+wouldn't	would not
+couldn't	could not
+shouldn't	should not
+can't	can not
+there's	there is
+that's	that is
+it's	it is
+kilograms	kg
+kilogram	kg
+kilometers	km
+kilometer	km
+kilometers per hour	kmh
+miles per hour	mph
+centimeters	cm
+centimeter	cm
+grams	gram
+#'d	 would
+'re	 are
+'ve	 have
+'ll	 will
+US dollars	dollars
