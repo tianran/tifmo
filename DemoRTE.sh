@@ -27,6 +27,7 @@ import tifmo.main.en.EnResources
 import tifmo.main.en.EnWord
 import tifmo.main.en.TIME
 import tifmo.main.en.EnSimilarityMikolov13
+import tifmo.main.en.EnSimilarityTurian10
 
 import scala.collection.mutable
 import scala.util.Sorting
@@ -108,7 +109,8 @@ for (p <- (f \ "pair")) {
 		
 		val otf = new OnTheFly(ie, ae)
 		
-		val sim = new EnSimilarityMikolov13(res, 0.7f)
+		//val sim = new EnSimilarityMikolov13(res, 0.7f)
+		val sim = new EnSimilarityTurian10(res, 0.7f)
 		
 		val score = (x:PathAlignment) => {
 			// evaluate path alignment

@@ -48,9 +48,12 @@ CORE=\
 CORENLP_VERSION=stanford-corenlp-full-2014-01-04
 CLASSPATH_EN=lib/*:lib/en/*:lib/en/$(CORENLP_VERSION)/*
 TARGET_EN=\
+	lib/en/$(CORENLP_VERSION).zip \
 	lib/en/$(CORENLP_VERSION) \
 	mylib/res/en/EnStopWords.class \
 	tifmo/main/en/EnWord.class \
+	resources/en/WordVectors \
+	resources/en/wn3.1.dict.tar.gz \
 	resources/en/dict \
 	mylib/res/en/EnWordNet.class \
 	tifmo/main/en/normalize.class \
@@ -59,16 +62,18 @@ TARGET_EN=\
 	mylib/misc/longestCommSeq.class \
 	tifmo/main/en/EnResources.class \
 	tifmo/main/en/EnSimilarity.class \
+	resources/en/WordVectors/Turian10-embeddings-scaled.EMBEDDING_SIZE-50.txt.gz \
 	resources/en/WordVectors/Turian10.cdb \
 	mylib/res/en/EnTurian10.class \
 	tifmo/main/en/EnSimilarityTurian10.class \
+	resources/en/WordVectors/Mikolov13-GoogleNews-vectors-negative300.txt.bz2 \
 	resources/en/WordVectors/Mikolov13.cdb \
 	mylib/res/en/EnMikolov13.class \
 	tifmo/main/en/EnSimilarityMikolov13.class \
 	
+#################################
 
-
-all: $(CORE) $(TARGET_EN)
+all: $(CORE) scaladoc $(TARGET_EN)
 
 
 tifmo/dcstree/DCSTreeNode.class: src/tifmo/dcstree/DCSTreeNode.scl src/tifmo/dcstree/Ref.scl src/tifmo/dcstree/Context.scl
@@ -81,15 +86,35 @@ tifmo/document/Document.class: src/tifmo/document/Document.scl src/tifmo/documen
 	$(SCALAC) $^
 
 
+scaladoc:
+	mkdir scaladoc
+	$(SCALADOC) -d scaladoc src/tifmo/dcstree/*.scl src/tifmo/inference/*.scl src/tifmo/onthefly/*.scl src/tifmo/document/*.scl
+
+
+lib/en/$(CORENLP_VERSION).zip:
+	wget http://nlp.stanford.edu/software/stanford-corenlp-full-2014-01-04.zip -O lib/en/$(CORENLP_VERSION).zip
+
 lib/en/$(CORENLP_VERSION):
 	unzip lib/en/$(CORENLP_VERSION).zip -d lib/en
+
+resources/en/WordVectors:
+	mkdir -p resources/en/WordVectors
+
+resources/en/wn3.1.dict.tar.gz:
+	wget http://wordnetcode.princeton.edu/wn3.1.dict.tar.gz -O resources/en/wn3.1.dict.tar.gz
 
 resources/en/dict:
 	tar xvfz resources/en/wn3.1.dict.tar.gz -C resources/en
 
+resources/en/WordVectors/Turian10-embeddings-scaled.EMBEDDING_SIZE-50.txt.gz:
+	wget http://metaoptimize.s3.amazonaws.com/cw-embeddings-ACL2010/embeddings-scaled.EMBEDDING_SIZE=50.txt.gz -O resources/en/WordVectors/Turian10-embeddings-scaled.EMBEDDING_SIZE-50.txt.gz
+
 resources/en/WordVectors/Turian10.cdb:
-	gunzip -c resources/en/WordVectors/Turian10-embeddings-scaled.EMBEDDING_SIZE=50.txt.gz > resources/en/WordVectors/Turian10.txt
+	gunzip -c resources/en/WordVectors/Turian10-embeddings-scaled.EMBEDDING_SIZE-50.txt.gz > resources/en/WordVectors/Turian10.txt
 	$(SCALA) -classpath "lib/*" lib/en/WordVectors/mkCdb.scala resources/en/WordVectors/Turian10.txt resources/en/WordVectors/Turian10.cdb 50
+
+resources/en/WordVectors/Mikolov13-GoogleNews-vectors-negative300.txt.bz2:
+	wget https://googledrive.com/host/0B_-oZIbBJszXS00tcG04YnBYZkU -O resources/en/WordVectors/Mikolov13-GoogleNews-vectors-negative300.txt.bz2
 
 resources/en/WordVectors/Mikolov13.cdb:
 	bunzip2 -c resources/en/WordVectors/Mikolov13-GoogleNews-vectors-negative300.txt.bz2 > resources/en/WordVectors/Mikolov13.txt
@@ -115,11 +140,8 @@ tifmo/%.class: src/tifmo/%.scl
 #################################
 
 clean:
-	rm -rf mylib tifmo scaladoc lib/en/$(CORENLP_VERSION) resources/en/dict resources/en/WordVectors/Turian10.cdb resources/en/WordVectors/Turian10.txt resources/en/WordVectors/Mikolov13.cdb resources/en/WordVectors/Mikolov13.txt
-
-scaladoc:
-	$(SCALADOC) -d scaladoc src/tifmo/dcstree/*.scl src/tifmo/inference/*.scl src/tifmo/onthefly/*.scl src/tifmo/document/*.scl
+	rm -rf mylib tifmo scaladoc
 
 #################################
 
-.PHONY: clean scaladoc
+.PHONY: clean

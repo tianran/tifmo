@@ -58,14 +58,16 @@ package onthefly {
 			
 			for {
 				DeclarativeSubRef(sub, sup) <- assumption
-				if logicallyRelated(ie, clueTerms, sub, sup)
+				supempty = ie.getTerm(sup.getDenotation).selfDisjoint
+				if supempty || logicallyRelated(ie, clueTerms, sub, sup)
 				subPaths = generatePaths(sub)
 				supPaths = generatePaths(sup)
 				subPath <- subPaths
 				supPath <- supPaths
 				if subPath.rnrs.length <= 5
 				if supPath.rnrs.length <= 5
-				if logicallyAligned(ie, clueTerms, subPath, supPath)
+				if supempty || logicallyAlignedUp(ie, clueTerms, subPath, supPath)
+				if logicallyAlignedDown(ie, clueTerms, subPath, supPath)
 				if signMatch(subPath, supPath)
 				if !headStopWord(subPath)
 				if !headNamedEntity(supPath)
@@ -101,19 +103,7 @@ package onthefly {
 			}
 		}
 		
-		private[this] def notClue(ie: IEngine, clueTerms: Set[Term], path: Path) = {
-			val nodes = path.rnrs.map(_._2).toSet
-			var ret = Set.empty[Term]
-			for (n <- nodes; wd = n.token.getWord; if !wd.isStopWord) {
-				val ws = DenotationWordSign(n.rseq.toSet, wd, n.sign)
-				for (den <- wordPIs(ws)) {
-					ret ++= clue(ie, clueTerms, den)._1
-				}
-			}
-			ret
-		}
-		
-		private[this] def logicallyAligned(ie: IEngine, clueTerms: Set[Term], subPath: Path, supPath: Path) = {
+		private[this] def logicallyAlignedUp(ie: IEngine, clueTerms: Set[Term], subPath: Path, supPath: Path) = {
 			
 			val (aClue1, aClue2) = clue(ie, clueTerms, subPath.start.node.germ(subPath.start.role))
 			val (aRefClue1, aRefClue2) = if (subPath.rnrs.length >= 2) {
@@ -131,26 +121,39 @@ package onthefly {
 				(bClue1, bClue2)
 			}
 			
-			if (!(aRefClue1 intersect bRefClue1).isEmpty || !(aRefClue2 intersect bRefClue2).isEmpty) {
+			!(aRefClue1 intersect bRefClue1).isEmpty || !(aRefClue2 intersect bRefClue2).isEmpty
+		}
+		
+		private[this] def notClue(ie: IEngine, clueTerms: Set[Term], path: Path) = {
+			val nodes = path.rnrs.map(_._2).toSet
+			var ret = Set.empty[Term]
+			for (n <- nodes; wd = n.token.getWord; if !wd.isStopWord) {
+				val ws = DenotationWordSign(n.rseq.toSet, wd, n.sign)
+				for (den <- wordPIs(ws)) {
+					ret ++= clue(ie, clueTerms, den)._1
+				}
+			}
+			ret
+		}
+		
+		private[this] def logicallyAlignedDown(ie: IEngine, clueTerms: Set[Term], subPath: Path, supPath: Path) = {
+			
+			val an = subPath.last.node
+			val bn = supPath.last.node
+			
+			(an.children.isEmpty && bn.children.isEmpty) || {
 				
 				val aNot = notClue(ie, clueTerms, subPath)
 				val bNot = notClue(ie, clueTerms, supPath)
 				
-				val an = subPath.last.node
-				val bn = supPath.last.node
+				val aClue1 = clue(ie, clueTerms, subPath.start.node.germ(subPath.start.role))._1
+				val bClue1 = clue(ie, clueTerms, supPath.start.node.germ(supPath.start.role))._1
 				
-				val endAlign = an.rseq.exists(ar => bn.rseq.exists(br => {
+				an.rseq.exists(ar => bn.rseq.exists(br => {
 					val aEnd = clue(ie, clueTerms, an.germ(ar))._1 -- aNot
 					val bEnd = clue(ie, clueTerms, bn.germ(br))._1 -- bNot
 					!((aEnd intersect bEnd) -- (aClue1 intersect bClue1)).isEmpty
 				}))
-				
-				endAlign || (an.children.isEmpty && bn.children.isEmpty)
-				
-			} else {
-				
-				false
-				
 			}
 		}
 		

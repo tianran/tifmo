@@ -305,7 +305,7 @@ package main.en {
 						}
 						case "agent" => {
 							doc.getTokenNode(ctk._1).outRole = ARG
-							doc.getTokenNode(ptk._1).addChild(SBJ, doc.getTokenNode(ctk._1))
+							doc.getTokenNode(ptk._1).addChild(SUBJ, doc.getTokenNode(ctk._1))
 						}
 						case "acomp" => {
 							doc.getTokenNode(ctk._1).outRole = ARG
@@ -342,7 +342,7 @@ package main.en {
 						case "nsubj" => {
 							if (ptk._2.mypos == "V") {
 								doc.getTokenNode(ctk._1).outRole = ARG
-								doc.getTokenNode(ptk._1).addChild(SBJ, doc.getTokenNode(ctk._1))
+								doc.getTokenNode(ptk._1).addChild(SUBJ, doc.getTokenNode(ctk._1))
 							} else if (ptk._2.mypos == "J") {
 								doc.getTokenNode(ctk._1).outRole = MOD
 								doc.getTokenNode(ptk._1).addChild(ARG, doc.getTokenNode(ctk._1))
@@ -358,7 +358,7 @@ package main.en {
 						case "csubj" => {
 							if (ptk._2.mypos == "V") {
 								doc.getTokenNode(ctk._1).outRole = ARG
-								doc.getTokenNode(ptk._1).addChild(SBJ, doc.getTokenNode(ctk._1))
+								doc.getTokenNode(ptk._1).addChild(SUBJ, doc.getTokenNode(ctk._1))
 							} else if (ptk._2.mypos == "J") {
 								doc.getTokenNode(ctk._1).outRole = MOD
 								doc.getTokenNode(ptk._1).addChild(ARG, doc.getTokenNode(ctk._1))
@@ -407,9 +407,9 @@ package main.en {
 							doc.getTokenNode(ptk._1).addChild(ARG, doc.getTokenNode(ctk._1))
 						}
 						case "partmod" => {
-							doc.getTokenNode(ctk._1).outRole = if (ctk._3 == "VBG") SBJ else OBJ
+							doc.getTokenNode(ctk._1).outRole = if (ctk._3 == "VBG") SUBJ else OBJ
 							val tmp = if (ptk._2.mypos == "V") {
-								if (edges.exists(x => x._1 == ptk && (x._2 == "nsubjpass" || x._2 == "csubjpass"))) OBJ else SBJ
+								if (edges.exists(x => x._1 == ptk && (x._2 == "nsubjpass" || x._2 == "csubjpass"))) OBJ else SUBJ
 							} else {
 								ARG
 							}
@@ -424,7 +424,7 @@ package main.en {
 						}
 						case "rcmod" => {
 							if (ctk._2.mypos == "V") {
-								val tmpmap = Map("when" -> TIME, "nsubj" -> SBJ, "dobj" -> OBJ, "iobj" -> IOBJ, "nsubjpass" -> OBJ)
+								val tmpmap = Map("when" -> TIME, "nsubj" -> SUBJ, "dobj" -> OBJ, "iobj" -> IOBJ, "nsubjpass" -> OBJ)
 								doc.getTokenNode(ctk._1).outRole = if (spc == null) ARG else tmpmap(spc)
 								val tmp = if (spc == "when") TIME else ARG
 								doc.getTokenNode(ptk._1).addChild(tmp, doc.getTokenNode(ctk._1))
