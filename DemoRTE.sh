@@ -109,8 +109,8 @@ for (p <- (f \ "pair")) {
 		
 		val otf = new OnTheFly(ie, ae)
 		
-		//val sim = new EnSimilarityMikolov13(res, 0.7f)
-		val sim = new EnSimilarityTurian10(res, 0.7f)
+		val sim = new EnSimilarityMikolov13(res, 0.7f)
+		//val sim = new EnSimilarityTurian10(res, 0.7f)
 		
 		val score = (x:PathAlignment) => {
 			// evaluate path alignment
