@@ -46,7 +46,7 @@ CORE=\
 	
 
 CORENLP_VERSION=stanford-corenlp-full-2014-01-04
-CLASSPATH_EN=lib/*:lib/en/*:lib/en/$(CORENLP_VERSION)/*
+CLASSPATH_EN=lib/*:lib/en/*:lib/en/$(CORENLP_VERSION)/*:.
 TARGET_EN=\
 	lib/en/$(CORENLP_VERSION).zip \
 	lib/en/$(CORENLP_VERSION) \
@@ -114,7 +114,7 @@ resources/en/WordVectors/Turian10.cdb:
 	$(SCALA) -classpath "lib/*" lib/en/WordVectors/mkCdb.scala resources/en/WordVectors/Turian10.txt resources/en/WordVectors/Turian10.cdb 50
 
 resources/en/WordVectors/Mikolov13-GoogleNews-vectors-negative300.txt.bz2:
-	wget https://googledrive.com/host/0B_-oZIbBJszXS00tcG04YnBYZkU -O resources/en/WordVectors/Mikolov13-GoogleNews-vectors-negative300.txt.bz2
+	wget --no-check-certificate https://googledrive.com/host/0B_-oZIbBJszXS00tcG04YnBYZkU -O resources/en/WordVectors/Mikolov13-GoogleNews-vectors-negative300.txt.bz2
 
 resources/en/WordVectors/Mikolov13.cdb:
 	bunzip2 -c resources/en/WordVectors/Mikolov13-GoogleNews-vectors-negative300.txt.bz2 > resources/en/WordVectors/Mikolov13.txt

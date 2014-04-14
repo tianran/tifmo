@@ -5,7 +5,7 @@ CORENLP_VERSION=stanford-corenlp-full-2014-01-04
 JAVA_OPTS=-Xmx4g
 export JAVA_OPTS
 
-CLASSPATH_EN=lib/*:lib/en/*:lib/en/$CORENLP_VERSION/*
+CLASSPATH_EN=lib/*:lib/en/*:lib/en/$CORENLP_VERSION/*:.
 
 exec $SCALA -classpath $CLASSPATH_EN "$0" "$@"
 !#
