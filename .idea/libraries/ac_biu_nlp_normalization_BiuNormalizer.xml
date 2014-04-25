@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ac.biu.nlp.normalization.BiuNormalizer">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/en/ac.biu.nlp.normalization.BiuNormalizer.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

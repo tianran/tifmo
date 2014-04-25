@@ -9,7 +9,7 @@ package res.en {
 	
 	object EnTurian10 {
 		
-		private[this] val dir = EnTurian10.getClass.getClassLoader.getResource("resources/en/WordVectors/Turian10.cdb").getFile
+		private[this] val dir = EnTurian10.getClass.getClassLoader.getResource("en/WordVectors/Turian10.cdb").getFile
 		
 		private[this] val cdb = new Cdb(dir)
 		

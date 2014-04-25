@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="edu.mit.jwi">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/en/edu.mit.jwi.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

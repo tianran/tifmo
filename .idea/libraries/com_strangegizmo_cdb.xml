@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="com.strangegizmo.cdb">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/com.strangegizmo.cdb.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

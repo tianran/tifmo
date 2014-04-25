@@ -1,147 +1,148 @@
-SCALA=scala
-SCALAC=scalac
-SCALADOC=scaladoc
+PRODUCTION_PATH=target/production
+SCALAC=scalac -d $(PRODUCTION_PATH) -classpath $(PRODUCTION_PATH)
+SCALA=scala -classpath "lib/*"
 
 CORE=\
-	tifmo/dcstree/SemRole.class \
-	tifmo/dcstree/Quantifier.class \
-	tifmo/dcstree/WordBase.class \
-	tifmo/dcstree/TokenBase.class \
-	tifmo/dcstree/Executor.class \
-	tifmo/dcstree/Selection.class \
-	tifmo/dcstree/Relation.class \
-	tifmo/dcstree/Denotation.class \
-	tifmo/dcstree/Statement.class \
-	tifmo/dcstree/DCSTreeEdge.class \
-	tifmo/dcstree/DCSTreeNode.class \
-	tifmo/dcstree/Declarative.class \
-	tifmo/dcstree/SelCorefBase.class \
-	mylib/misc/oneFromEach.class \
-	mylib/misc/listPartitions.class \
-	mylib/misc/listCoverings.class \
-	tifmo/inference/Dimension.class \
-	tifmo/inference/IEngineCore.class \
-	tifmo/inference/FuncComplement.class \
-	tifmo/inference/FuncDIall.class \
-	tifmo/inference/FuncDIno.class \
-	tifmo/inference/FuncSingle.class \
-	tifmo/inference/FuncNegation.class \
-	tifmo/inference/IEDump.class \
-	tifmo/inference/IEngine.class \
-	tifmo/onthefly/AEngine.class \
-	tifmo/onthefly/Path.class \
-	tifmo/onthefly/PathAlignment.class \
-	tifmo/onthefly/alignPaths.class \
-	tifmo/onthefly/contextCandidates.class \
-	mylib/misc/FibonacciHeap.class \
-	tifmo/onthefly/OnTheFly.class \
-	tifmo/document/SelCoref.class \
-	tifmo/document/SelNum.class \
-	tifmo/document/RelPartialOrder.class \
-	tifmo/document/SelSup.class \
-	tifmo/document/Document.class \
-	tifmo/document/tentRootNeg.class \
-	tifmo/document/tentRoles.class \
-	tifmo/document/tentRoleOrder.class \
+	$(PRODUCTION_PATH) \
+	$(PRODUCTION_PATH)/tifmo/dcstree/SemRole.class \
+	$(PRODUCTION_PATH)/tifmo/dcstree/Quantifier.class \
+	$(PRODUCTION_PATH)/tifmo/dcstree/WordBase.class \
+	$(PRODUCTION_PATH)/tifmo/dcstree/TokenBase.class \
+	$(PRODUCTION_PATH)/tifmo/dcstree/Executor.class \
+	$(PRODUCTION_PATH)/tifmo/dcstree/Selection.class \
+	$(PRODUCTION_PATH)/tifmo/dcstree/Relation.class \
+	$(PRODUCTION_PATH)/tifmo/dcstree/Denotation.class \
+	$(PRODUCTION_PATH)/tifmo/dcstree/Statement.class \
+	$(PRODUCTION_PATH)/tifmo/dcstree/DCSTreeEdge.class \
+	$(PRODUCTION_PATH)/tifmo/dcstree/DCSTreeNode.class \
+	$(PRODUCTION_PATH)/tifmo/dcstree/Declarative.class \
+	$(PRODUCTION_PATH)/tifmo/dcstree/SelCorefBase.class \
+	$(PRODUCTION_PATH)/mylib/misc/oneFromEach.class \
+	$(PRODUCTION_PATH)/mylib/misc/listPartitions.class \
+	$(PRODUCTION_PATH)/mylib/misc/listCoverings.class \
+	$(PRODUCTION_PATH)/tifmo/inference/Dimension.class \
+	$(PRODUCTION_PATH)/tifmo/inference/IEngineCore.class \
+	$(PRODUCTION_PATH)/tifmo/inference/FuncComplement.class \
+	$(PRODUCTION_PATH)/tifmo/inference/FuncDIall.class \
+	$(PRODUCTION_PATH)/tifmo/inference/FuncDIno.class \
+	$(PRODUCTION_PATH)/tifmo/inference/FuncSingle.class \
+	$(PRODUCTION_PATH)/tifmo/inference/FuncNegation.class \
+	$(PRODUCTION_PATH)/tifmo/inference/IEDump.class \
+	$(PRODUCTION_PATH)/tifmo/inference/IEngine.class \
+	$(PRODUCTION_PATH)/tifmo/onthefly/AEngine.class \
+	$(PRODUCTION_PATH)/tifmo/onthefly/Path.class \
+	$(PRODUCTION_PATH)/tifmo/onthefly/PathAlignment.class \
+	$(PRODUCTION_PATH)/tifmo/onthefly/alignPaths.class \
+	$(PRODUCTION_PATH)/tifmo/onthefly/contextCandidates.class \
+	$(PRODUCTION_PATH)/mylib/misc/FibonacciHeap.class \
+	$(PRODUCTION_PATH)/tifmo/onthefly/OnTheFly.class \
+	$(PRODUCTION_PATH)/tifmo/document/SelCoref.class \
+	$(PRODUCTION_PATH)/tifmo/document/SelNum.class \
+	$(PRODUCTION_PATH)/tifmo/document/RelPartialOrder.class \
+	$(PRODUCTION_PATH)/tifmo/document/SelSup.class \
+	$(PRODUCTION_PATH)/tifmo/document/Document.class \
+	$(PRODUCTION_PATH)/tifmo/document/tentRootNeg.class \
+	$(PRODUCTION_PATH)/tifmo/document/tentRoles.class \
+	$(PRODUCTION_PATH)/tifmo/document/tentRoleOrder.class \
 	
 
 CORENLP_VERSION=stanford-corenlp-full-2014-01-04
-CLASSPATH_EN=lib/*:lib/en/*:lib/en/$(CORENLP_VERSION)/*:.
-TARGET_EN=\
-	lib/en/$(CORENLP_VERSION).zip \
+LIBRES_EN=\
 	lib/en/$(CORENLP_VERSION) \
-	mylib/res/en/EnStopWords.class \
-	tifmo/main/en/EnWord.class \
-	resources/en/WordVectors \
-	resources/en/wn3.1.dict.tar.gz \
 	resources/en/dict \
-	mylib/res/en/EnWordNet.class \
-	tifmo/main/en/normalize.class \
-	tifmo/main/en/ARG.class \
-	tifmo/main/en/parse.class \
-	mylib/misc/longestCommSeq.class \
-	tifmo/main/en/EnResources.class \
-	tifmo/main/en/EnSimilarity.class \
-	resources/en/WordVectors/Turian10-embeddings-scaled.EMBEDDING_SIZE-50.txt.gz \
+	resources/en/WordVectors \
 	resources/en/WordVectors/Turian10.cdb \
-	mylib/res/en/EnTurian10.class \
-	tifmo/main/en/EnSimilarityTurian10.class \
-	resources/en/WordVectors/Mikolov13-GoogleNews-vectors-negative300.txt.bz2 \
 	resources/en/WordVectors/Mikolov13.cdb \
-	mylib/res/en/EnMikolov13.class \
-	tifmo/main/en/EnSimilarityMikolov13.class \
+
+
+CLASSPATH_EN=lib/*:lib/en/*:lib/en/$(CORENLP_VERSION)/*
+TARGET_EN=\
+	$(PRODUCTION_PATH)/mylib/res/en/EnStopWords.class \
+	$(PRODUCTION_PATH)/tifmo/main/en/EnWord.class \
+	$(PRODUCTION_PATH)/mylib/res/en/EnWordNet.class \
+	$(PRODUCTION_PATH)/tifmo/main/en/normalize.class \
+	$(PRODUCTION_PATH)/tifmo/main/en/ARG.class \
+	$(PRODUCTION_PATH)/tifmo/main/en/parse.class \
+	$(PRODUCTION_PATH)/mylib/misc/longestCommSeq.class \
+	$(PRODUCTION_PATH)/tifmo/main/en/EnResources.class \
+	$(PRODUCTION_PATH)/tifmo/main/en/EnSimilarity.class \
+	$(PRODUCTION_PATH)/mylib/res/en/EnTurian10.class \
+	$(PRODUCTION_PATH)/tifmo/main/en/EnSimilarityTurian10.class \
+	$(PRODUCTION_PATH)/mylib/res/en/EnMikolov13.class \
+	$(PRODUCTION_PATH)/tifmo/main/en/EnSimilarityMikolov13.class \
 	
 #################################
 
-all: $(CORE) scaladoc $(TARGET_EN)
+all: $(CORE) enlibres $(TARGET_EN)
 
 
-tifmo/dcstree/DCSTreeNode.class: src/tifmo/dcstree/DCSTreeNode.scl src/tifmo/dcstree/Ref.scl src/tifmo/dcstree/Context.scl
+$(PRODUCTION_PATH):
+	mkdir -p $(PRODUCTION_PATH)
+
+$(PRODUCTION_PATH)/tifmo/dcstree/DCSTreeNode.class: src/tifmo/dcstree/DCSTreeNode.scala src/tifmo/dcstree/Ref.scala src/tifmo/dcstree/Context.scala
 	$(SCALAC) $^
 	
-tifmo/inference/IEngineCore.class: src/tifmo/inference/IEngineCore.scl src/tifmo/inference/Term.scl src/tifmo/inference/Finder.scl src/tifmo/inference/Debug_RuleTrace.scl src/tifmo/inference/IEPred.scl src/tifmo/inference/IEFunction.scl src/tifmo/inference/RuleArg.scl src/tifmo/inference/Trigger.scl src/tifmo/inference/RulesQuick.scl src/tifmo/inference/RulesLight.scl src/tifmo/inference/RulesHeavy.scl
+$(PRODUCTION_PATH)/tifmo/inference/IEngineCore.class: src/tifmo/inference/IEngineCore.scala src/tifmo/inference/Term.scala src/tifmo/inference/Finder.scala src/tifmo/inference/Debug_RuleTrace.scala src/tifmo/inference/IEPred.scala src/tifmo/inference/IEFunction.scala src/tifmo/inference/RuleArg.scala src/tifmo/inference/Trigger.scala src/tifmo/inference/RulesQuick.scala src/tifmo/inference/RulesLight.scala src/tifmo/inference/RulesHeavy.scala
 	$(SCALAC) $^
 
-tifmo/document/Document.class: src/tifmo/document/Document.scl src/tifmo/document/Token.scl src/tifmo/document/TokenNode.scl
+$(PRODUCTION_PATH)/tifmo/document/Document.class: src/tifmo/document/Document.scala src/tifmo/document/Token.scala src/tifmo/document/TokenNode.scala
 	$(SCALAC) $^
 
 
-scaladoc:
-	mkdir scaladoc
-	$(SCALADOC) -d scaladoc src/tifmo/dcstree/*.scl src/tifmo/inference/*.scl src/tifmo/onthefly/*.scl src/tifmo/document/*.scl
-
-
-lib/en/$(CORENLP_VERSION).zip:
-	wget http://nlp.stanford.edu/software/stanford-corenlp-full-2014-01-04.zip -O lib/en/$(CORENLP_VERSION).zip
+enlibres: $(LIBRES_EN)
 
 lib/en/$(CORENLP_VERSION):
+	if [ ! -e lib/en/$(CORENLP_VERSION).zip ]; then \
+		wget http://nlp.stanford.edu/software/stanford-corenlp-full-2014-01-04.zip -O lib/en/$(CORENLP_VERSION).zip; fi
 	unzip lib/en/$(CORENLP_VERSION).zip -d lib/en
 
 resources/en/WordVectors:
 	mkdir -p resources/en/WordVectors
 
-resources/en/wn3.1.dict.tar.gz:
-	wget http://wordnetcode.princeton.edu/wn3.1.dict.tar.gz -O resources/en/wn3.1.dict.tar.gz
-
 resources/en/dict:
+	if [ ! -e resources/en/wn3.1.dict.tar.gz ]; then \
+		wget http://wordnetcode.princeton.edu/wn3.1.dict.tar.gz -O resources/en/wn3.1.dict.tar.gz; fi
 	tar xvfz resources/en/wn3.1.dict.tar.gz -C resources/en
 
-resources/en/WordVectors/Turian10-embeddings-scaled.EMBEDDING_SIZE-50.txt.gz:
-	wget http://metaoptimize.s3.amazonaws.com/cw-embeddings-ACL2010/embeddings-scaled.EMBEDDING_SIZE=50.txt.gz -O resources/en/WordVectors/Turian10-embeddings-scaled.EMBEDDING_SIZE-50.txt.gz
-
 resources/en/WordVectors/Turian10.cdb:
+	if [ ! -e resources/en/WordVectors/Turian10-embeddings-scaled.EMBEDDING_SIZE-50.txt.gz ]; then \
+		wget http://metaoptimize.s3.amazonaws.com/cw-embeddings-ACL2010/embeddings-scaled.EMBEDDING_SIZE=50.txt.gz -O resources/en/WordVectors/Turian10-embeddings-scaled.EMBEDDING_SIZE-50.txt.gz; fi
 	gunzip -c resources/en/WordVectors/Turian10-embeddings-scaled.EMBEDDING_SIZE-50.txt.gz > resources/en/WordVectors/Turian10.txt
-	$(SCALA) -classpath "lib/*" lib/en/WordVectors/mkCdb.scala resources/en/WordVectors/Turian10.txt resources/en/WordVectors/Turian10.cdb 50
-
-resources/en/WordVectors/Mikolov13-GoogleNews-vectors-negative300.txt.bz2:
-	wget --no-check-certificate https://googledrive.com/host/0B_-oZIbBJszXS00tcG04YnBYZkU -O resources/en/WordVectors/Mikolov13-GoogleNews-vectors-negative300.txt.bz2
+	$(SCALA) lib/en/WordVectors/mkCdb.scala resources/en/WordVectors/Turian10.txt resources/en/WordVectors/Turian10.cdb 50
 
 resources/en/WordVectors/Mikolov13.cdb:
+	if [ ! -e resources/en/WordVectors/Mikolov13-GoogleNews-vectors-negative300.txt.bz2 ]; then \
+		wget --no-check-certificate https://googledrive.com/host/0B_-oZIbBJszXS00tcG04YnBYZkU -O resources/en/WordVectors/Mikolov13-GoogleNews-vectors-negative300.txt.bz2; fi
 	bunzip2 -c resources/en/WordVectors/Mikolov13-GoogleNews-vectors-negative300.txt.bz2 > resources/en/WordVectors/Mikolov13.txt
-	$(SCALA) -classpath "lib/*" lib/en/WordVectors/mkCdb.scala resources/en/WordVectors/Mikolov13.txt resources/en/WordVectors/Mikolov13.cdb 300
+	$(SCALA) lib/en/WordVectors/mkCdb.scala resources/en/WordVectors/Mikolov13.txt resources/en/WordVectors/Mikolov13.cdb 300
 
-mylib/res/en/%.class: src/mylib/res/en/%.scl
-	$(SCALAC) -classpath $(CLASSPATH_EN) $<
 
-tifmo/main/en/%.class: src/tifmo/main/en/%.scl
-	$(SCALAC) -classpath $(CLASSPATH_EN) $<
+$(PRODUCTION_PATH)/mylib/res/en/%.class: src/mylib/res/en/%.scala
+	$(SCALAC):$(CLASSPATH_EN) $<
 
-tifmo/main/en/ARG.class: src/tifmo/main/en/roles.scl
+$(PRODUCTION_PATH)/tifmo/main/en/%.class: src/tifmo/main/en/%.scala
+	$(SCALAC):$(CLASSPATH_EN) $<
+
+$(PRODUCTION_PATH)/tifmo/main/en/ARG.class: src/tifmo/main/en/roles.scala
 	$(SCALAC) $<
 
 
-mylib/misc/%.class: src/mylib/misc/%.scl
+$(PRODUCTION_PATH)/mylib/misc/%.class: src/mylib/misc/%.scala
 	$(SCALAC) $<
 
-tifmo/%.class: src/tifmo/%.scl
+$(PRODUCTION_PATH)/tifmo/%.class: src/tifmo/%.scala
 	$(SCALAC) $<
 
 
 #################################
+
+scaladoc:
+	mkdir scaladoc
+	scaladoc -d scaladoc src/mylib/misc/*.scala src/tifmo/dcstree/*.scala src/tifmo/inference/*.scala src/tifmo/onthefly/*.scala src/tifmo/document/*.scala
 
 clean:
-	rm -rf mylib tifmo scaladoc
+	rm -rf target scaladoc
 
 #################################
 
-.PHONY: clean
+.PHONY: scaladoc clean
